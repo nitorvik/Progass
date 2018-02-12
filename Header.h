@@ -7,18 +7,13 @@
 
 using std::cout;
 using std::endl;
-using std::setw;
+using namespace std;
+
 
 struct Move {
 	int x;
 	int y;
 	uint32_t index;
-
-	//bool operator!=(Move a) {
-	//	if (a.x != x || a.y != y || a.index != index)
-	//		return false;
-	//	return true;
-	//}
 };
 
 
@@ -27,6 +22,7 @@ struct node
 public:
 	Move info;
 	struct node *next;
+	node() : next(nullptr) {};
 };
 
 
@@ -37,12 +33,15 @@ class llist {
 	
 public:
 
-	void push(Move coords) {
+	llist() : start(nullptr) {};
+
+	void push(Move &coords) {
 		struct node *p = new node;
 
 		p = newnode(coords);
 		if (start == NULL) {
 			start = p;
+			start->next = NULL;
 		}
 		else {
 			p->next = start;
@@ -57,72 +56,47 @@ public:
 			throw std::runtime_error("The list is empty");
 		}
 		else {
+			Move data = start->info;
 			struct node *temp = new node;
 			temp = start;
-			Move data = start->info;
-			//start = start->next;
+			start = start->next;
 			delete temp;
 			cout << "pop successful" << endl;
 			return data;
 		}
 	}
 	
-	node *newnode(Move value) {
+	node *newnode(Move &value) {
 		struct node *temp = new(struct node);
-		if (temp == NULL) {
-			return 0;
-		}
-		else {
 			temp->info = value;
 			temp->next = NULL;
 			return temp;
-		}
 	}
 
 	void display()
 	
 	{
-	
 		struct node *temp;
-	
 		if (start == NULL)
-	
 		{
-	
 			cout << "The List is Empty" << endl;
-	
 			return;
-	
 		}
-	
 		temp = start;
-	
 		cout << "Elements of list are: " << endl;
-	
 		while (temp != NULL)
-	
 		{
-	
+
 			cout << temp->info.x << "->";
-	
 			temp = temp->next;
-	
 		}
 	
-		cout << "NULL" << endl;
-	
+		cout << "empty" << endl;
 	}
 };
 
 
 
-/*void displaylist(){
-while (start != NULL)
-{
-cout << start->info << endl;
-start = start->next;
-}
-}*/
 
 /*Creating Node*/
 
